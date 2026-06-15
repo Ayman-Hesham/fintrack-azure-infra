@@ -14,9 +14,21 @@ resource "azurerm_storage_account" "loki" {
   }
 }
 
-# ─── Blob Container for Loki Chunks + Index ──────────────────
+# ─── Blob Containers for Loki ────────────────────────────────
 resource "azurerm_storage_container" "loki" {
   name                  = "loki-logs"
+  storage_account_id    = azurerm_storage_account.loki.id
+  container_access_type = "private"
+}
+
+resource "azurerm_storage_container" "loki_chunks" {
+  name                  = "chunks"
+  storage_account_id    = azurerm_storage_account.loki.id
+  container_access_type = "private"
+}
+
+resource "azurerm_storage_container" "loki_ruler" {
+  name                  = "ruler"
   storage_account_id    = azurerm_storage_account.loki.id
   container_access_type = "private"
 }
@@ -31,7 +43,6 @@ resource "azurerm_storage_management_policy" "loki" {
 
     filters {
       blob_types   = ["blockBlob"]
-      prefix_match = ["loki-logs/"]
     }
 
     actions {

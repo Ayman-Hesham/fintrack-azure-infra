@@ -100,6 +100,8 @@ resource "helm_release" "loki" {
   depends_on = [
     kubernetes_namespace.observability,
     azurerm_storage_container.loki,
+    azurerm_storage_container.loki_chunks,
+    azurerm_storage_container.loki_ruler,
     azurerm_role_assignment.loki_storage
   ]
 }
