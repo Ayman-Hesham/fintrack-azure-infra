@@ -64,10 +64,10 @@ spec:
               key: cors_allowed_origins
         resources:
           requests:
-            cpu: 100m
+            cpu: 400m
             memory: 512Mi
           limits:
-            cpu: 500m
+            cpu: 800m
             memory: 768Mi
         livenessProbe:
           httpGet:
