@@ -10,4 +10,4 @@ resources:
 
 images:
 - name: fintrackacr.azurecr.io/fintrack/backend
-  newTag: afeeeb66d47109fe7d07ee1c4246dd6343423742
+  newTag: 4f254761c81e2a37e97071aa30c585175eb528c1
