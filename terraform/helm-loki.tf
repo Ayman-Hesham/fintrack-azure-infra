@@ -13,9 +13,9 @@ resource "helm_release" "loki" {
       storage = {
         type = "azure"
         azure = {
-          accountName       = azurerm_storage_account.loki.name
-          containerName     = azurerm_storage_container.loki.name
-          useFederatedToken = true
+          accountName   = azurerm_storage_account.loki.name
+          containerName = azurerm_storage_container.loki.name
+          accountKey    = azurerm_storage_account.loki.primary_access_key
         }
       }
 
@@ -62,12 +62,6 @@ resource "helm_release" "loki" {
     serviceAccount = {
       create = true
       name   = "loki"
-      annotations = {
-        "azure.workload-identity/client-id" = azurerm_user_assigned_identity.loki.client_id
-      }
-      labels = {
-        "azure.workload-identity/use" = "true"
-      }
     }
 
     backend = {
