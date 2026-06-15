@@ -1,0 +1,31 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: fintrack
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: fintrack
+  source:
+    repoURL: https://github.com/Ayman-Hesham/fintrack-azure-infra.git
+    targetRevision: main
+    path: k8s/base
+    kustomize:
+      namePrefix: ""
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: application
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+      allowEmpty: false
+    syncOptions:
+    - CreateNamespace=true
+    retry:
+      limit: 5
+      backoff:
+        duration: 5s
+        factor: 2
+        maxDuration: 3m

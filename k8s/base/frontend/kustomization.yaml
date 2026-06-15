@@ -1,0 +1,11 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+- deployment.yaml
+- service.yaml
+- hpa.yaml
+
+images:
+- name: fintrackacr.azurecr.io/fintrack/frontend
+  newTag: afeeeb66d47109fe7d07ee1c4246dd6343423742
