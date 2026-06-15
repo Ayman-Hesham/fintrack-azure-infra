@@ -72,3 +72,10 @@ resource "azurerm_role_assignment" "aks_appgw_subnet" {
   role_definition_name = "Network Contributor"
   principal_id         = azurerm_kubernetes_cluster.main.identity[0].principal_id
 }
+
+# AGIC identity needs Network Contributor on the VNet to join the AppGW and AKS subnets
+resource "azurerm_role_assignment" "agic_vnet" {
+  scope                = azurerm_virtual_network.main.id
+  role_definition_name = "Network Contributor"
+  principal_id         = azurerm_kubernetes_cluster.main.ingress_application_gateway[0].ingress_application_gateway_identity[0].object_id
+}
